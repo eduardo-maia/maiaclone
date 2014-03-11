@@ -94,6 +94,8 @@ Public Class Form1
         Dim files As New StringCollection
         Dim newdir As New StringCollection
 
+        'TODO: kindly check if directories really exist.
+
         'SAVE TEXTBOXES TO A TEXT FILE
         Dim objWriter As New System.IO.StreamWriter(Directory.GetCurrentDirectory() + "\config.ini")
         objWriter.WriteLine(TextBox2.Text)
@@ -153,6 +155,7 @@ Public Class Form1
                 Next
                 ' END MKDIR CHECK
 
+                'TODO: try catch, sometimes files can't be copied, for an example: disk full, bad blocks, and such
                 System.IO.File.Copy(File, novo_destino, True)
             End If
         Next
@@ -162,6 +165,7 @@ Public Class Form1
         Dim dir_destino As New StringCollection
         Dim TempDir As String
 
+        'TODO: files must be deleted first to avoid issues when the empty space is minimum
         'REMOVENDO EM DESTINO OS ARQUIVOS QUE FORAM REMOVIDOS DA ORIGEM
         Label1.Text = "Removing files from backup directory that were removed from source directory..."
         If (CheckBox1.Checked) Then
