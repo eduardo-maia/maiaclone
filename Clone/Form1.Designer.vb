@@ -22,34 +22,42 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
-        Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
+        Me.SaveFileDialog = New System.Windows.Forms.SaveFileDialog()
+        Me.FolderBrowserDialog = New System.Windows.Forms.FolderBrowserDialog()
         Me.BottomToolStripPanel = New System.Windows.Forms.ToolStripPanel()
         Me.TopToolStripPanel = New System.Windows.Forms.ToolStripPanel()
         Me.RightToolStripPanel = New System.Windows.Forms.ToolStripPanel()
         Me.LeftToolStripPanel = New System.Windows.Forms.ToolStripPanel()
         Me.ContentPanel = New System.Windows.Forms.ToolStripContentPanel()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
-        Me.Button4 = New System.Windows.Forms.Button()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.ButtonFindBackupDirectory = New System.Windows.Forms.Button()
+        Me.TextBoxBackupDirectory = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.Button3 = New System.Windows.Forms.Button()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.ButtonFindSourceDirectory = New System.Windows.Forms.Button()
+        Me.TextBoxSourceDirectory = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.ButtonFullBackup = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox = New System.Windows.Forms.CheckBox()
+        Me.ButtonWatch = New System.Windows.Forms.Button()
+        Me.ButtonHelp = New System.Windows.Forms.Button()
+        Me.NotifyIcon = New System.Windows.Forms.NotifyIcon(Me.components)
+        Me.MainContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ShowWindow = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExitApp = New System.Windows.Forms.ToolStripMenuItem()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
+        Me.MainContextMenu.SuspendLayout()
         Me.SuspendLayout()
         '
-        'SaveFileDialog1
+        'SaveFileDialog
         '
-        Me.SaveFileDialog1.Filter = "Text files (*.txt)|*.txt|All files|*"
+        Me.SaveFileDialog.Filter = "Text files (*.txt)|*.txt|All files|*"
         '
         'BottomToolStripPanel
         '
@@ -90,8 +98,8 @@ Partial Class Form1
         '
         'GroupBox3
         '
-        Me.GroupBox3.Controls.Add(Me.Button4)
-        Me.GroupBox3.Controls.Add(Me.TextBox3)
+        Me.GroupBox3.Controls.Add(Me.ButtonFindBackupDirectory)
+        Me.GroupBox3.Controls.Add(Me.TextBoxBackupDirectory)
         Me.GroupBox3.Controls.Add(Me.Label6)
         Me.GroupBox3.Controls.Add(Me.Label7)
         Me.GroupBox3.Location = New System.Drawing.Point(2, 94)
@@ -100,22 +108,22 @@ Partial Class Form1
         Me.GroupBox3.TabIndex = 18
         Me.GroupBox3.TabStop = False
         '
-        'Button4
+        'ButtonFindBackupDirectory
         '
-        Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
-        Me.Button4.Location = New System.Drawing.Point(492, 16)
-        Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(75, 58)
-        Me.Button4.TabIndex = 11
-        Me.Button4.UseVisualStyleBackColor = True
+        Me.ButtonFindBackupDirectory.Image = CType(resources.GetObject("ButtonFindBackupDirectory.Image"), System.Drawing.Image)
+        Me.ButtonFindBackupDirectory.Location = New System.Drawing.Point(492, 16)
+        Me.ButtonFindBackupDirectory.Name = "ButtonFindBackupDirectory"
+        Me.ButtonFindBackupDirectory.Size = New System.Drawing.Size(75, 58)
+        Me.ButtonFindBackupDirectory.TabIndex = 11
+        Me.ButtonFindBackupDirectory.UseVisualStyleBackColor = True
         '
-        'TextBox3
+        'TextBoxBackupDirectory
         '
-        Me.TextBox3.BackColor = System.Drawing.SystemColors.Window
-        Me.TextBox3.Location = New System.Drawing.Point(9, 54)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(468, 20)
-        Me.TextBox3.TabIndex = 10
+        Me.TextBoxBackupDirectory.BackColor = System.Drawing.SystemColors.Window
+        Me.TextBoxBackupDirectory.Location = New System.Drawing.Point(9, 54)
+        Me.TextBoxBackupDirectory.Name = "TextBoxBackupDirectory"
+        Me.TextBoxBackupDirectory.Size = New System.Drawing.Size(468, 20)
+        Me.TextBoxBackupDirectory.TabIndex = 10
         '
         'Label6
         '
@@ -132,14 +140,14 @@ Partial Class Form1
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.Location = New System.Drawing.Point(6, 16)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(126, 13)
+        Me.Label7.Size = New System.Drawing.Size(105, 13)
         Me.Label7.TabIndex = 7
-        Me.Label7.Text = "Destination Directory"
+        Me.Label7.Text = "Backup Directory"
         '
         'GroupBox2
         '
-        Me.GroupBox2.Controls.Add(Me.Button3)
-        Me.GroupBox2.Controls.Add(Me.TextBox2)
+        Me.GroupBox2.Controls.Add(Me.ButtonFindSourceDirectory)
+        Me.GroupBox2.Controls.Add(Me.TextBoxSourceDirectory)
         Me.GroupBox2.Controls.Add(Me.Label5)
         Me.GroupBox2.Controls.Add(Me.Label3)
         Me.GroupBox2.Location = New System.Drawing.Point(2, 3)
@@ -148,22 +156,22 @@ Partial Class Form1
         Me.GroupBox2.TabIndex = 17
         Me.GroupBox2.TabStop = False
         '
-        'Button3
+        'ButtonFindSourceDirectory
         '
-        Me.Button3.Image = CType(resources.GetObject("Button3.Image"), System.Drawing.Image)
-        Me.Button3.Location = New System.Drawing.Point(492, 16)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(75, 58)
-        Me.Button3.TabIndex = 11
-        Me.Button3.UseVisualStyleBackColor = True
+        Me.ButtonFindSourceDirectory.Image = CType(resources.GetObject("ButtonFindSourceDirectory.Image"), System.Drawing.Image)
+        Me.ButtonFindSourceDirectory.Location = New System.Drawing.Point(492, 16)
+        Me.ButtonFindSourceDirectory.Name = "ButtonFindSourceDirectory"
+        Me.ButtonFindSourceDirectory.Size = New System.Drawing.Size(75, 58)
+        Me.ButtonFindSourceDirectory.TabIndex = 11
+        Me.ButtonFindSourceDirectory.UseVisualStyleBackColor = True
         '
-        'TextBox2
+        'TextBoxSourceDirectory
         '
-        Me.TextBox2.BackColor = System.Drawing.SystemColors.Window
-        Me.TextBox2.Location = New System.Drawing.Point(9, 54)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(468, 20)
-        Me.TextBox2.TabIndex = 10
+        Me.TextBoxSourceDirectory.BackColor = System.Drawing.SystemColors.Window
+        Me.TextBoxSourceDirectory.Location = New System.Drawing.Point(9, 54)
+        Me.TextBoxSourceDirectory.Name = "TextBoxSourceDirectory"
+        Me.TextBoxSourceDirectory.Size = New System.Drawing.Size(468, 20)
+        Me.TextBoxSourceDirectory.TabIndex = 10
         '
         'Label5
         '
@@ -184,14 +192,14 @@ Partial Class Form1
         Me.Label3.TabIndex = 7
         Me.Label3.Text = "Source Directory"
         '
-        'Button1
+        'ButtonFullBackup
         '
-        Me.Button1.Location = New System.Drawing.Point(462, 195)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(107, 23)
-        Me.Button1.TabIndex = 16
-        Me.Button1.Text = "Backup my files"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.ButtonFullBackup.Location = New System.Drawing.Point(360, 193)
+        Me.ButtonFullBackup.Name = "ButtonFullBackup"
+        Me.ButtonFullBackup.Size = New System.Drawing.Size(83, 23)
+        Me.ButtonFullBackup.TabIndex = 16
+        Me.ButtonFullBackup.Text = "Full Backup"
+        Me.ButtonFullBackup.UseVisualStyleBackColor = True
         '
         'Label1
         '
@@ -202,55 +210,108 @@ Partial Class Form1
         Me.Label1.Size = New System.Drawing.Size(0, 13)
         Me.Label1.TabIndex = 20
         '
-        'CheckBox1
+        'CheckBox
         '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(8, 199)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(324, 17)
-        Me.CheckBox1.TabIndex = 21
-        Me.CheckBox1.Text = "Remove files from destination that don't exist in source directory"
-        Me.CheckBox1.UseVisualStyleBackColor = True
+        Me.CheckBox.AutoSize = True
+        Me.CheckBox.Location = New System.Drawing.Point(8, 199)
+        Me.CheckBox.Name = "CheckBox"
+        Me.CheckBox.Size = New System.Drawing.Size(338, 17)
+        Me.CheckBox.TabIndex = 21
+        Me.CheckBox.Text = "Remove files from backup folder that don't exist in source directory"
+        Me.CheckBox.UseVisualStyleBackColor = True
+        '
+        'ButtonWatch
+        '
+        Me.ButtonWatch.Location = New System.Drawing.Point(449, 193)
+        Me.ButtonWatch.Name = "ButtonWatch"
+        Me.ButtonWatch.Size = New System.Drawing.Size(59, 23)
+        Me.ButtonWatch.TabIndex = 22
+        Me.ButtonWatch.Text = "Watch"
+        Me.ButtonWatch.UseVisualStyleBackColor = True
+        '
+        'ButtonHelp
+        '
+        Me.ButtonHelp.Location = New System.Drawing.Point(514, 193)
+        Me.ButtonHelp.Name = "ButtonHelp"
+        Me.ButtonHelp.Size = New System.Drawing.Size(66, 23)
+        Me.ButtonHelp.TabIndex = 23
+        Me.ButtonHelp.Text = "Help"
+        Me.ButtonHelp.UseVisualStyleBackColor = True
+        '
+        'NotifyIcon
+        '
+        Me.NotifyIcon.ContextMenuStrip = Me.MainContextMenu
+        Me.NotifyIcon.Icon = CType(resources.GetObject("NotifyIcon.Icon"), System.Drawing.Icon)
+        Me.NotifyIcon.Text = "Maia Cloneme 1.0"
+        '
+        'MainContextMenu
+        '
+        Me.MainContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowWindow, Me.ExitApp})
+        Me.MainContextMenu.Name = "MainContextMenu"
+        Me.MainContextMenu.Size = New System.Drawing.Size(149, 48)
+        '
+        'ShowWindow
+        '
+        Me.ShowWindow.Name = "ShowWindow"
+        Me.ShowWindow.Size = New System.Drawing.Size(152, 22)
+        Me.ShowWindow.Text = "Show window"
+        '
+        'ExitApp
+        '
+        Me.ExitApp.Name = "ExitApp"
+        Me.ExitApp.Size = New System.Drawing.Size(152, 22)
+        Me.ExitApp.Text = "Exit"
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(584, 251)
-        Me.Controls.Add(Me.CheckBox1)
+        Me.ClientSize = New System.Drawing.Size(587, 252)
+        Me.Controls.Add(Me.ButtonHelp)
+        Me.Controls.Add(Me.ButtonWatch)
+        Me.Controls.Add(Me.CheckBox)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.GroupBox2)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.ButtonFullBackup)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
         Me.Name = "Form1"
         Me.Text = "Maia Cloneme 1.0"
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
+        Me.MainContextMenu.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents SaveFileDialog1 As System.Windows.Forms.SaveFileDialog
-    Friend WithEvents FolderBrowserDialog1 As System.Windows.Forms.FolderBrowserDialog
+    Friend WithEvents SaveFileDialog As System.Windows.Forms.SaveFileDialog
+    Friend WithEvents FolderBrowserDialog As System.Windows.Forms.FolderBrowserDialog
     Friend WithEvents BottomToolStripPanel As System.Windows.Forms.ToolStripPanel
     Friend WithEvents TopToolStripPanel As System.Windows.Forms.ToolStripPanel
     Friend WithEvents RightToolStripPanel As System.Windows.Forms.ToolStripPanel
     Friend WithEvents LeftToolStripPanel As System.Windows.Forms.ToolStripPanel
     Friend WithEvents ContentPanel As System.Windows.Forms.ToolStripContentPanel
     Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
-    Friend WithEvents Button4 As System.Windows.Forms.Button
-    Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
+    Friend WithEvents ButtonFindBackupDirectory As System.Windows.Forms.Button
+    Friend WithEvents TextBoxBackupDirectory As System.Windows.Forms.TextBox
     Friend WithEvents Label6 As System.Windows.Forms.Label
     Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
-    Friend WithEvents Button3 As System.Windows.Forms.Button
-    Friend WithEvents TextBox2 As System.Windows.Forms.TextBox
+    Friend WithEvents ButtonFindSourceDirectory As System.Windows.Forms.Button
+    Friend WithEvents TextBoxSourceDirectory As System.Windows.Forms.TextBox
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents ButtonFullBackup As System.Windows.Forms.Button
     Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
+    Friend WithEvents CheckBox As System.Windows.Forms.CheckBox
+    Friend WithEvents ButtonWatch As System.Windows.Forms.Button
+    Friend WithEvents ButtonHelp As System.Windows.Forms.Button
+    Friend WithEvents NotifyIcon As System.Windows.Forms.NotifyIcon
+    Friend WithEvents MainContextMenu As System.Windows.Forms.ContextMenuStrip
+    Friend WithEvents ExitApp As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ShowWindow As System.Windows.Forms.ToolStripMenuItem
 
 End Class
