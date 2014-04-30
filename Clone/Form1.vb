@@ -3,6 +3,7 @@ Imports System.IO
 Imports System.Collections
 Imports System.Collections.Specialized
 Imports System.Text.RegularExpressions
+Imports System.Threading
 
 Public Class Form1
 
@@ -27,14 +28,19 @@ Public Class Form1
 
     Private Function GetModifiedDate(ByVal filepath As String) As Date
         Return System.IO.File.GetLastWriteTime(filepath) '.ToString("yyyy-mm-dd HH:mm:ss")
+
     End Function
 
 
     ' LOG TO A TEXT FILE
-    Private Sub loga(ByVal msg As String)
-        Using sw As StreamWriter = File.AppendText("clone.log")
-            sw.WriteLine(msg)
-        End Using
+    Public Shared Sub loga(ByVal msg As String)
+        Try
+            Using sw As StreamWriter = File.AppendText("clone.log")
+                sw.WriteLine(msg)
+            End Using
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
     End Sub
 
     Private Function GetFileSize(ByVal filepath As String)
@@ -122,17 +128,45 @@ Public Class Form1
         loga("Getting files and directories from source " & TextBoxSourceDirectory.Text & "...")
         newdir.Add(TextBoxSourceDirectory.Text)
 
+        'TODO: open new thread for this, to stop freezing the main thread while copying files
         While (newdir.Count > 0)
             ListAll(newdir(0), newdir, files)
             newdir.RemoveAt(0)
+            Application.DoEvents()
         End While
         loga("Found a total of " & files.Count & " files.")
 
-        Label1.Text = "Found a total of " & files.Count & " files. Copying your files..."
+        Label1.Text = "Found a total of " & files.Count & " files. Checking paths sizes..."
+
+
+        'CHECKING IF ANY PATH LENGTH > 256. IF sO, ASK TO SHRINK IT
+        'TODO: use better class than System.IO, without this limitation
+        Dim found260 As Boolean = False
+        For Each File As String In files
+            If (File.Length() >= 260) Then
+                If (found260 = False) Then
+                    found260 = True
+                    loga("One or more paths contain more than 260 characters. Please, shrink these paths:")
+                End If
+                loga(File)
+            End If
+        Next
+        If (found260) Then
+            MsgBox("Found some paths longer than 260 characters. Process stopped. Please check clone.log for more information.")
+            Label1.Text = "Please check clone.log"
+            EnableAll()
+            Exit Sub
+        End If
+
 
         ' SEARCHING FILES TO BE COPIED TO BACK UP DIRECTORY
+        'TODO: open new thread for copying files, to stop freezing the main thread while copying files
         loga("Searching files to be copied to the backup directory")
+        Dim processed_files As Integer = 0
         For Each File As String In files
+            processed_files = processed_files + 1
+            'TODO: inform also time remaining instead of just number of files
+            Label1.Text = "Processing file " & processed_files & " of " & files.Count & "..."
             Application.DoEvents()
             Dim novo_destino As String = File.Replace(TextBoxSourceDirectory.Text, TextBoxBackupDirectory.Text)
             If (System.IO.File.Exists(novo_destino) And GetModifiedDate(File) > GetModifiedDate(novo_destino) And GetFileSize(File) > GetFileSize(novo_destino)) Then
@@ -207,11 +241,7 @@ Public Class Form1
         'this is just a double check
 
         'ENABLE ALL FORM ELEMENTS
-        TextBoxSourceDirectory.Enabled = True
-        TextBoxBackupDirectory.Enabled = True
-        ButtonFullBackup.Enabled = True
-        ButtonFindSourceDirectory.Enabled = True
-        ButtonFindBackupDirectory.Enabled = True
+        EnableAll()
 
         Label1.Text = "Full backup completed. Watching."
 
@@ -221,6 +251,15 @@ Public Class Form1
         dir_destino.Clear()
 
         Watch(TextBoxSourceDirectory.Text)
+    End Sub
+
+    Private Sub EnableAll()
+        'ENABLE ALL FORM ELEMENTS
+        TextBoxSourceDirectory.Enabled = True
+        TextBoxBackupDirectory.Enabled = True
+        ButtonFullBackup.Enabled = True
+        ButtonFindSourceDirectory.Enabled = True
+        ButtonFindBackupDirectory.Enabled = True
     End Sub
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonFindSourceDirectory.Click
@@ -248,9 +287,15 @@ Public Class Form1
 
 
     Private Sub buttonWatch_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonWatch.Click
+        'SAVE TEXTBOXES TO A TEXT FILE
+        Dim objWriter As New System.IO.StreamWriter(Directory.GetCurrentDirectory() + "\config.ini")
+        objWriter.WriteLine(TextBoxSourceDirectory.Text)
+        objWriter.WriteLine(TextBoxBackupDirectory.Text)
+        objWriter.Close()
+
         Label1.Text = "Watching."
         Watch(TextBoxSourceDirectory.Text)
-
+        ButtonWatch.Enabled = False
     End Sub
 
 
@@ -276,9 +321,14 @@ Public Class Form1
         ' Begin watching.
         watcher.EnableRaisingEvents = True
 
-
         Console.WriteLine("Watching " + dirPath)
+    End Sub
 
+
+    Private Shared Sub Remove_Watch(ByVal dirPath As String)
+        Dim watcher As New FileSystemWatcher()
+        watcher.Path = dirPath
+        watcher.EnableRaisingEvents = False
     End Sub
 
 
@@ -313,24 +363,57 @@ Public Class Form1
         destiny = e.FullPath
         destiny = destiny.Replace(from_local, to_local)
 
+        If (e.FullPath.Length() >= 260) Then
+            MsgBox(e.FullPath & "\n\n" & "This location has more than 260 characters. Can't continue.")
+            Exit Sub
+        End If
+
+        If (destiny.Length() >= 260) Then
+            MsgBox(destiny & "\n\n" & "This location has more than 260 characters. Can't continue.")
+            Exit Sub
+        End If
+
         Select Case e.ChangeType
 
-            ' archive was created
             Case 1
+                ' directory was created
                 If (System.IO.Directory.Exists(e.FullPath)) Then
                     If (Not System.IO.Directory.Exists(destiny)) Then
-                        System.IO.Directory.CreateDirectory(destiny) 'TODO: try catch
+                        Try
+                            System.IO.Directory.CreateDirectory(destiny)
+                        Catch ex As Exception
+                            MsgBox(ex.Message)
+                        End Try
                     End If
+
+                    'copy all files from the new created directory to the back up directory
+retrycopydir:
+                    Try
+                        My.Computer.FileSystem.CopyDirectory(e.FullPath, destiny, True)
+                    Catch ex As Exception
+                        Thread.Sleep(1000)
+                        GoTo retrycopydir
+                    End Try
+
                 End If
 
+                ' archive was created
                 If (System.IO.File.Exists(e.FullPath)) Then
-                    System.IO.File.Copy(e.FullPath, destiny, True) 'TODO: try catch, sometimes files can't be copied, for an example: disk full, bad blocks, and such
+                    Dim trd = New Thread(Sub() CopyFile(e.FullPath, destiny))
+                    trd.IsBackground = True
+                    trd.Start()
                 End If
 
                 ' archive was deleted
             Case 2
                 If (System.IO.Directory.Exists(destiny)) Then
-                    System.IO.Directory.Delete(destiny) 'TODO: try catch
+retrydeldir:
+                    Try
+                        System.IO.Directory.Delete(destiny, True)
+                    Catch ex As Exception
+                        Thread.Sleep(1000)
+                        GoTo retrydeldir
+                    End Try
                 End If
 
                 If (System.IO.File.Exists(destiny)) Then
@@ -340,7 +423,9 @@ Public Class Form1
                 ' archive was modified
             Case 4
                 If (System.IO.File.Exists(destiny)) Then
-                    System.IO.File.Copy(e.FullPath, destiny, True) 'TODO: try catch, sometimes files can't be copied, for an example: disk full, bad blocks, and such
+                    Dim trd = New Thread(Sub() CopyFile(e.FullPath, destiny))
+                    trd.IsBackground = True
+                    trd.Start()
                 End If
 
 
@@ -353,9 +438,33 @@ Public Class Form1
     End Sub
 
 
+    Private Shared Sub CopyFile(ByVal from_location As String, ByVal to_location As String)
+        Try
+            System.IO.File.Copy(from_location, to_location, True)
+        Catch ex As Exception
+            loga(ex.Message)
+            'if file is being written by another application, after this file is written, Sub OnChanged will be called again, so we don't need to sleep and start the CopyFile again
+        End Try
+    End Sub
+
+
+
+
     ' Specify what is done when a file is renamed.
     Private Shared Sub OnRenamed(ByVal source As Object, ByVal e As RenamedEventArgs)
         Console.WriteLine("File: {0} renamed to {1}", e.OldFullPath, e.FullPath)
+
+        If (e.FullPath.Length() >= 256) Then
+            MsgBox(e.FullPath & "\n\n" & "This location has more than 256 characters. Can't proceed")
+            Exit Sub
+        End If
+
+        If (e.OldFullPath.Length() >= 256) Then
+            MsgBox(e.OldFullPath & "\n\n" & "This location has more than 256 characters. Can't proceed")
+            Exit Sub
+        End If
+
+
 
         'TODO: stop copy and paste
         Static from_local As String = ""
@@ -386,11 +495,21 @@ Public Class Form1
         new_name = new_name.Replace(from_local, to_local)
 
         If (System.IO.Directory.Exists(e.FullPath)) Then
-            System.IO.Directory.Move(old_name, new_name) 'TODO: try catch
+            Try
+                System.IO.Directory.Move(old_name, new_name)
+            Catch ex As Exception
+                loga("ERROR: can't rename directory >> " & ex.Message)
+                MsgBox(ex.Message)
+            End Try
         End If
 
         If (System.IO.File.Exists(old_name)) Then
-            System.IO.File.Move(old_name, new_name) 'TODO: try catch
+            Try
+                System.IO.File.Move(old_name, new_name)
+            Catch ex As Exception
+                loga("ERROR: can't rename file >> " & ex.Message)
+                MsgBox(ex.Message)
+            End Try
         End If
 
 

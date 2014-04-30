@@ -31,3 +31,14 @@ D:\Trabalho\Source\CloneVBNET\Clone\trunk\Clone\obj\x86\Debug\Clone.Form1.resour
 D:\Trabalho\Source\CloneVBNET\Clone\trunk\Clone\obj\x86\Debug\Clone.Resources.resources
 D:\Trabalho\Source\CloneVBNET\Clone\trunk\Clone\obj\x86\Debug\GenerateResource.read.1.tlog
 D:\Trabalho\Source\CloneVBNET\Clone\trunk\Clone\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\obj\x86\Debug\Clone.exe
+D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\obj\x86\Debug\Clone.xml
+D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\obj\x86\Debug\Clone.pdb
+D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\bin\Debug\Clone.exe
+D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\bin\Debug\Clone.pdb
+D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\bin\Debug\Clone.xml
+D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\obj\x86\Debug\Clone.Form1.resources
+D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\obj\x86\Debug\Clone.Resources.resources
+D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\obj\x86\Debug\GenerateResource.write.1.tlog
