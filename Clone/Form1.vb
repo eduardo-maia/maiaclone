@@ -39,7 +39,7 @@ Public Class Form1
                 sw.WriteLine(msg)
             End Using
         Catch ex As Exception
-            MsgBox(ex.Message)
+            'MsgBox(ex.Message)
         End Try
     End Sub
 
@@ -322,13 +322,6 @@ Public Class Form1
         watcher.EnableRaisingEvents = True
 
         Console.WriteLine("Watching " + dirPath)
-    End Sub
-
-
-    Private Shared Sub Remove_Watch(ByVal dirPath As String)
-        Dim watcher As New FileSystemWatcher()
-        watcher.Path = dirPath
-        watcher.EnableRaisingEvents = False
     End Sub
 
 
