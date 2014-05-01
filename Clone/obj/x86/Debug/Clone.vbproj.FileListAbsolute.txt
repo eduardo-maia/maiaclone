@@ -42,3 +42,4 @@ D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\obj\x86\Debug\Clone.F
 D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\obj\x86\Debug\Clone.Resources.resources
 D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\obj\x86\Debug\GenerateResource.read.1.tlog
 D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\bin\Debug\Clone.exe.config

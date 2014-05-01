@@ -76,3 +76,11 @@ Could not find a part of the path 'H:\Backup\Trabalho\AndroidWS\.metadata\.plugi
 Could not find a part of the path 'H:\Backup\Trabalho\AndroidWS\.metadata\.plugins\org.eclipse.core.resources\.history\dc\b0e466116fd00013163d841387cbc658'.
 Could not find a part of the path 'H:\Backup\Trabalho\AndroidWS\.metadata\.plugins\org.eclipse.core.resources\.history\37\c04073116fd00013163d841387cbc658'.
 The process cannot access the file 'D:\Backup\Trabalho\Curriculum\SP 2013\~WRD0000.tmp' because it is being used by another process.
+ERROR: can't rename file >> Não é possível criar um arquivo já existente.
+
+ERROR: can't rename file >> Não é possível criar um arquivo já existente.
+
+Could not find file 'D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\bin\Debug\vs650.tmp'.
+The process cannot access the file 'H:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\obj\x86\Debug\GenerateResource.write.1.tlog' because it is being used by another process.
+Could not find file 'D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\bin\Debug\vsA893.tmp'.
+Could not find file 'D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\images\dbase_help_icon.jpg'.

@@ -31,3 +31,4 @@ D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\obj\x86\Release\Clone
 D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\obj\x86\Release\Clone.Resources.resources
 D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\obj\x86\Release\GenerateResource.read.1.tlog
 D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\obj\x86\Release\GenerateResource.write.1.tlog
+D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\bin\Release\Clone.exe.config

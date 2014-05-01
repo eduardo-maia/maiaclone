@@ -4,6 +4,7 @@ Imports System.Collections
 Imports System.Collections.Specialized
 Imports System.Text.RegularExpressions
 Imports System.Threading
+Imports Microsoft.VisualBasic.ApplicationServices
 
 Public Class Form1
 
@@ -92,12 +93,16 @@ Public Class Form1
         End If
 
         NotifyIcon.Visible = False
+
+        LabelStatus.Text = "Not watching. Not running a full back up."
     End Sub
 
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonFullBackup.Click
         Dim files As New StringCollection
         Dim newdir As New StringCollection
+
+        ButtonWatch.Enabled = False
 
         'TODO: kindly check if directories really exist.
 
@@ -114,7 +119,7 @@ Public Class Form1
             Exit Sub
         End If
 
-        Label1.Text = "Searching for files to backup..."
+        LabelStatus.Text = "Searching for files to backup..."
 
         'DISABLE ALL FORM ELEMENTS
         TextBoxSourceDirectory.Enabled = False
@@ -136,7 +141,7 @@ Public Class Form1
         End While
         loga("Found a total of " & files.Count & " files.")
 
-        Label1.Text = "Found a total of " & files.Count & " files. Checking paths sizes..."
+        LabelStatus.Text = "Found a total of " & files.Count & " files. Checking paths sizes..."
 
 
         'CHECKING IF ANY PATH LENGTH > 256. IF sO, ASK TO SHRINK IT
@@ -153,7 +158,7 @@ Public Class Form1
         Next
         If (found260) Then
             MsgBox("Found some paths longer than 260 characters. Process stopped. Please check clone.log for more information.")
-            Label1.Text = "Please check clone.log"
+            LabelStatus.Text = "Please check clone.log"
             EnableAll()
             Exit Sub
         End If
@@ -166,7 +171,7 @@ Public Class Form1
         For Each File As String In files
             processed_files = processed_files + 1
             'TODO: inform also time remaining instead of just number of files
-            Label1.Text = "Processing file " & processed_files & " of " & files.Count & "..."
+            LabelStatus.Text = "Processing file " & processed_files & " of " & files.Count & "..."
             Application.DoEvents()
             Dim novo_destino As String = File.Replace(TextBoxSourceDirectory.Text, TextBoxBackupDirectory.Text)
             If (System.IO.File.Exists(novo_destino) And GetModifiedDate(File) > GetModifiedDate(novo_destino) And GetFileSize(File) > GetFileSize(novo_destino)) Then
@@ -200,7 +205,7 @@ Public Class Form1
 
         'TODO: files must be deleted first to avoid issues when the empty space is minimum
         'REMOVENDO EM DESTINO OS ARQUIVOS QUE FORAM REMOVIDOS DA ORIGEM
-        Label1.Text = "Removing files from backup directory that were removed from source directory..."
+        LabelStatus.Text = "Removing files from backup directory that were removed from source directory..."
         If (CheckBox.Checked) Then
 
             dir_destino.Add(TextBoxBackupDirectory.Text)
@@ -243,7 +248,7 @@ Public Class Form1
         'ENABLE ALL FORM ELEMENTS
         EnableAll()
 
-        Label1.Text = "Full backup completed. Watching."
+        LabelStatus.Text = "Full backup completed. Watching."
 
         files.Clear()
         newdir.Clear()
@@ -293,9 +298,10 @@ Public Class Form1
         objWriter.WriteLine(TextBoxBackupDirectory.Text)
         objWriter.Close()
 
-        Label1.Text = "Watching."
+        LabelStatus.Text = "Watching."
         Watch(TextBoxSourceDirectory.Text)
         ButtonWatch.Enabled = False
+        ButtonFullBackup.Enabled = False
     End Sub
 
 
@@ -514,9 +520,6 @@ retrycopyfile:
     End Sub
 
 
-    Private Sub ButtonHelp_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonHelp.Click
-        Process.Start("https://github.com/eduardo-maia/maiaclone/wiki")
-    End Sub
 
 
     Private Sub Form1_FormClosing(ByVal sender As Object, ByVal e As FormClosingEventArgs) Handles Me.FormClosing
@@ -549,4 +552,15 @@ retrycopyfile:
     End Sub
 
 
+    Private Sub HelpToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles HelpToolStripMenuItem1.Click
+        Process.Start("https://github.com/eduardo-maia/maiaclone/wiki")
+    End Sub
+
+    Private Sub ExitToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExitToolStripMenuItem.Click
+        Application.Exit()
+    End Sub
+
+    Private Sub AboutToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AboutToolStripMenuItem.Click
+        MsgBox("Localbox Easy Backup" & Chr(10) & "Version: 0.01" & Chr(10) & "Build date: " & "2014-05-01")
+    End Sub
 End Class
