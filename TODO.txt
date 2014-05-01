@@ -1,0 +1,2 @@
+1. Disable text boxes while watching or running a full back up.
+2. File exit must exit the application, instead of minimize it to system tray.
