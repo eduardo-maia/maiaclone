@@ -370,6 +370,7 @@ Public Class Form1
 
             Case 1
                 ' directory was created
+retrycopydir:
                 If (System.IO.Directory.Exists(e.FullPath)) Then
                     If (Not System.IO.Directory.Exists(destiny)) Then
                         Try
@@ -380,7 +381,6 @@ Public Class Form1
                     End If
 
                     'copy all files from the new created directory to the back up directory
-retrycopydir:
                     Try
                         My.Computer.FileSystem.CopyDirectory(e.FullPath, destiny, True)
                     Catch ex As Exception
@@ -399,8 +399,8 @@ retrycopydir:
 
                 ' archive was deleted
             Case 2
-                If (System.IO.Directory.Exists(destiny)) Then
 retrydeldir:
+                If (System.IO.Directory.Exists(destiny)) Then
                     Try
                         System.IO.Directory.Delete(destiny, True)
                     Catch ex As Exception
@@ -415,12 +415,17 @@ retrydeldir:
 
                 ' archive was modified
             Case 4
-                If (System.IO.File.Exists(destiny)) Then
-                    Dim trd = New Thread(Sub() CopyFile(e.FullPath, destiny))
-                    trd.IsBackground = True
-                    trd.Start()
-                End If
-
+retrycopyfile:
+                Try
+                    If (System.IO.File.Exists(destiny)) Then
+                        Dim trd = New Thread(Sub() CopyFile(e.FullPath, destiny))
+                        trd.IsBackground = True
+                        trd.Start()
+                    End If
+                Catch ex As Exception
+                    Thread.Sleep(1000)
+                    GoTo retrycopyfile
+                End Try
 
         End Select
 
