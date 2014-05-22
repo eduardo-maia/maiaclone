@@ -102,9 +102,15 @@ Public Class Form1
         Dim files As New StringCollection
         Dim newdir As New StringCollection
 
-        ButtonWatch.Enabled = False
+        'CONFIRM if user really wants to proceed with a full back up
+        If MsgBox("Really proceed with a full back up?", MsgBoxStyle.YesNo, My.Application.Info.ProductName) = MsgBoxResult.No Then
+            Exit Sub
+        End If
 
         'TODO: kindly check if directories really exist.
+
+        ButtonWatch.Enabled = False
+        ButtonFullBackup.Enabled = False
 
         'SAVE TEXTBOXES TO A TEXT FILE
         Dim objWriter As New System.IO.StreamWriter(Directory.GetCurrentDirectory() + "\config.ini")
@@ -414,9 +420,14 @@ retrydeldir:
                         GoTo retrydeldir
                     End Try
                 End If
-
+retrydelfile:
                 If (System.IO.File.Exists(destiny)) Then
-                    System.IO.File.Delete(destiny) 'TODO: try catch
+                    Try
+                        System.IO.File.Delete(destiny)
+                    Catch ex As Exception
+                        Thread.Sleep(1000)
+                        GoTo retrydelfile
+                    End Try
                 End If
 
                 ' archive was modified
