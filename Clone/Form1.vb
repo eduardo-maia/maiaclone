@@ -40,10 +40,13 @@ Public Class Form1
 
         If (errorMsg <> "") Then
             MsgBox(errorMsg)
+            TextBoxSourceDirectory.BackColor = Color.White
+            TextBoxBackupDirectory.BackColor = Color.White
             Return False
         End If
 
         TextBoxSourceDirectory.BackColor = Color.White
+        TextBoxBackupDirectory.BackColor = Color.White
         Return True
 
     End Function
