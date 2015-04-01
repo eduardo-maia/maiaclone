@@ -136,7 +136,7 @@ Partial Class Form1
         '
         'TextBoxBackupDirectory
         '
-        Me.TextBoxBackupDirectory.BackColor = System.Drawing.SystemColors.Window
+        Me.TextBoxBackupDirectory.BackColor = System.Drawing.Color.White
         Me.TextBoxBackupDirectory.Location = New System.Drawing.Point(9, 54)
         Me.TextBoxBackupDirectory.Name = "TextBoxBackupDirectory"
         Me.TextBoxBackupDirectory.Size = New System.Drawing.Size(468, 20)
@@ -184,7 +184,7 @@ Partial Class Form1
         '
         'TextBoxSourceDirectory
         '
-        Me.TextBoxSourceDirectory.BackColor = System.Drawing.SystemColors.Window
+        Me.TextBoxSourceDirectory.BackColor = System.Drawing.Color.White
         Me.TextBoxSourceDirectory.Location = New System.Drawing.Point(9, 54)
         Me.TextBoxSourceDirectory.Name = "TextBoxSourceDirectory"
         Me.TextBoxSourceDirectory.Size = New System.Drawing.Size(468, 20)
@@ -353,7 +353,7 @@ Partial Class Form1
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(92, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'HelpToolStripMenuItem
@@ -366,13 +366,13 @@ Partial Class Form1
         'HelpToolStripMenuItem1
         '
         Me.HelpToolStripMenuItem1.Name = "HelpToolStripMenuItem1"
-        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(152, 22)
+        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(107, 22)
         Me.HelpToolStripMenuItem1.Text = "Help"
         '
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
         Me.AboutToolStripMenuItem.Text = "About"
         '
         'GroupBox5

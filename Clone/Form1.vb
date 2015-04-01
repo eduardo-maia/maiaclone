@@ -1,4 +1,4 @@
-﻿Imports System
+Imports System
 Imports System.IO
 Imports System.Collections
 Imports System.Collections.Specialized
@@ -10,20 +10,42 @@ Public Class Form1
 
     Dim CommandLineArgs As System.Collections.ObjectModel.ReadOnlyCollection(Of String) = My.Application.CommandLineArgs
 
+    Public Function FileExists(ByVal FileFullPath As String) As Boolean
+        Dim f As New IO.FileInfo(FileFullPath)
+        Return f.Exists
+    End Function
+
+    Public Function FolderExists(ByVal FolderPath As String) As Boolean
+        Dim f As New IO.DirectoryInfo(FolderPath)
+        Return f.Exists
+    End Function
+
     Private Function ValidateForm() As Boolean
-        Dim returnValue As Boolean
-        returnValue = True
+        Dim errorMsg As String = ""
 
         If (TextBoxSourceDirectory.Text = "") Then
             TextBoxSourceDirectory.BackColor = Color.Red
-            returnValue = False
+            errorMsg = "Please fill **Source Diretory** field." & vbCrLf
+        ElseIf (Not FolderExists(TextBoxSourceDirectory.Text)) Then
+            TextBoxSourceDirectory.BackColor = Color.Red
+            errorMsg = "Informed **Source Diretory** " & TextBoxSourceDirectory.Text & " is not a directory" & vbCrLf
         End If
         If (TextBoxBackupDirectory.Text = "") Then
             TextBoxBackupDirectory.BackColor = Color.Red
-            returnValue = False
+            errorMsg = errorMsg & "Please fill **Backup Diretory** field." & vbCrLf
+        ElseIf (Not FolderExists(TextBoxBackupDirectory.Text)) Then
+            TextBoxBackupDirectory.BackColor = Color.Red
+            errorMsg = errorMsg & "**Backup Diretory** " & TextBoxBackupDirectory.Text & " is not a directory" & vbCrLf
         End If
 
-        Return returnValue
+        If (errorMsg <> "") Then
+            MsgBox(errorMsg)
+            Return False
+        End If
+
+        TextBoxSourceDirectory.BackColor = Color.White
+        Return True
+
     End Function
 
 
@@ -241,7 +263,11 @@ Public Class Form1
                     files_destino(i) = files_destino(i).Replace(TextBoxSourceDirectory.Text, TextBoxBackupDirectory.Text)
                     loga("Removed " & files_destino(i))
                     If (System.IO.File.Exists(files_destino(i))) Then
-                        System.IO.File.Delete(files_destino(i))
+                        Try
+                            System.IO.File.Delete(files_destino(i))
+                        Catch ex As Exception
+                            loga(ex.Message)
+                        End Try
                     End If
                 End If
             Next
@@ -298,6 +324,11 @@ Public Class Form1
 
 
     Private Sub buttonWatch_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonWatch.Click
+        If (Not ValidateForm()) Then
+            Exit Sub
+        End If
+
+
         'SAVE TEXTBOXES TO A TEXT FILE
         Dim objWriter As New System.IO.StreamWriter(Directory.GetCurrentDirectory() + "\config.ini")
         objWriter.WriteLine(TextBoxSourceDirectory.Text)

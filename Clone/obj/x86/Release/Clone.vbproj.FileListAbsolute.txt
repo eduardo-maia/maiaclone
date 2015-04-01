@@ -32,3 +32,13 @@ D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\obj\x86\Release\Clone
 D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\obj\x86\Release\GenerateResource.read.1.tlog
 D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\obj\x86\Release\GenerateResource.write.1.tlog
 D:\Backup\Trabalho\Source\CloneVBNET\CloneRepo\trunk\Clone\bin\Release\Clone.exe.config
+C:\Backup\Trabalho\github\maiaclone\Clone\bin\Release\Clone.exe.config
+C:\Backup\Trabalho\github\maiaclone\Clone\obj\x86\Release\Clone.exe
+C:\Backup\Trabalho\github\maiaclone\Clone\obj\x86\Release\Clone.xml
+C:\Backup\Trabalho\github\maiaclone\Clone\obj\x86\Release\Clone.pdb
+C:\Backup\Trabalho\github\maiaclone\Clone\obj\x86\Release\Clone.Form1.resources
+C:\Backup\Trabalho\github\maiaclone\Clone\obj\x86\Release\Clone.Resources.resources
+C:\Backup\Trabalho\github\maiaclone\Clone\obj\x86\Release\Clone.vbproj.GenerateResource.Cache
+C:\Backup\Trabalho\github\maiaclone\Clone\bin\Release\Clone.exe
+C:\Backup\Trabalho\github\maiaclone\Clone\bin\Release\Clone.pdb
+C:\Backup\Trabalho\github\maiaclone\Clone\bin\Release\Clone.xml
