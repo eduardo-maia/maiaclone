@@ -422,7 +422,7 @@ retrycopydir:
                         Try
                             System.IO.Directory.CreateDirectory(destiny)
                         Catch ex As Exception
-                            MsgBox(ex.Message)
+                            MsgBox("***" & ex.Message & "***" & vbCrLf & e.FullPath & vbCrLf & destiny)
                         End Try
                     End If
 
@@ -548,7 +548,7 @@ retrycopyfile:
                 System.IO.Directory.Move(old_name, new_name)
             Catch ex As Exception
                 loga("ERROR: can't rename directory >> " & ex.Message)
-                MsgBox(ex.Message)
+                MsgBox("ERROR: can't rename directory" & vbCrLf & ex.Message & "Old name = " & old_name & vbCrLf & "New name = " & new_name)
             End Try
         End If
 
@@ -557,7 +557,7 @@ retrycopyfile:
                 System.IO.File.Move(old_name, new_name)
             Catch ex As Exception
                 loga("ERROR: can't rename file >> " & ex.Message)
-                MsgBox(ex.Message)
+                MsgBox("ERROR: can't rename file" & vbCrLf & ex.Message & "Old name = " & old_name & vbCrLf & "New name = " & new_name)
             End Try
         End If
 

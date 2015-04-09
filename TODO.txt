@@ -1,2 +1,3 @@
 1. Disable text boxes while watching or running a full back up.
 2. File exit must exit the application, instead of minimize it to system tray.
+3. Sometimes the program lock some files that needed to be unlocked to make other programs work properly.  Example: while compiling Visual Studio code, while trying to save a file under a subdirectory that is being watched, and so on.

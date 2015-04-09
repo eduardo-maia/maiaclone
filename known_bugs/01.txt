@@ -1,0 +1,7 @@
+---------------------------
+Clone
+---------------------------
+ERROR: can't rename fileThe process cannot access the file because it is being used by another process.Old name = F:\Backup\Trabalho\github\code_education_design_patterns\code_education_design_patterns\.git\packed-refs.lockNew name = F:\Backup\Trabalho\github\code_education_design_patterns\code_education_design_patterns\.git\packed-refs
+---------------------------
+OK   
+---------------------------
